@@ -49,11 +49,14 @@ int main() {
     int title_columns = TITLE_SIZE[1];
     int options_rows = OPTIONS_SIZE[0];
     int options_columns = OPTIONS_SIZE[1];
+    int controls_rows = CONTROLS_SIZE[0];
+    int controls_columns = CONTROLS_SIZE[1];
     // Variables de coordonnees pour le main menu
     int main_menu_title_row = (terminal_size[0] / 2) - title_rows;  
     int main_menu_title_column = (terminal_size[1] / 2) - (TITLE_SIZE[1] / 2) + 1;
     int main_menu_options_row = main_menu_title_row + title_rows + 2;
     int main_menu_options_column = main_menu_title_column + (title_columns / 2) - (options_columns / 2);
+    
     
     // On print le menu principal
     print_main_menu(TITLE_SIZE, OPTIONS_SIZE,main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);

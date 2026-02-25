@@ -140,6 +140,21 @@ int print_options(const int options_size[2], int option, int row, int column, in
     return 0;
 }
 
+
+int print_controls(const int controls_size[2], int row, int column, int flush) {
+    // Variables de taille
+    int controls_rows = controls_size[0];
+    int controls_columns = controls_size[1];
+
+    // Print des controles
+    for (int i = 0; i < controls_rows; i++) {
+        print_line(CONTROLS[i], row+i, column, NOFLUSH);
+    }
+    if (flush) return fflush(stdout);
+
+    return 0;
+}
+
 // Print main menu - Titre et options initiales
 // Print le titre et les options initiales sans padding, avec les options sous le titre au centre
 int print_main_menu(const int title_size[2], const int options_size[2], int title_row, int title_column, int options_row, int options_column) {
