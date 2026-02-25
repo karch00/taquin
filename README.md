@@ -29,6 +29,3 @@
 
 ### ASCII art
 - [patorjk - ASCII art generator](https://patorjk.com/software/taag/)
-
-# Journal
-##
