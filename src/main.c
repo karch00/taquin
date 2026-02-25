@@ -56,49 +56,56 @@ int main() {
     int main_menu_title_column = (terminal_size[1] / 2) - (TITLE_SIZE[1] / 2) + 1;
     int main_menu_options_row = main_menu_title_row + title_rows + 2;
     int main_menu_options_column = main_menu_title_column + (title_columns / 2) - (options_columns / 2);
-    
-    
+    int main_menu_controls_row = main_menu_title_row + title_rows + 2;
+    int main_menu_controls_column = main_menu_title_column + (title_columns / 2) - (controls_columns / 2);
+
     // On print le menu principal
     print_main_menu(TITLE_SIZE, OPTIONS_SIZE,main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);
 
-    // Boucle principal du jeu
-    while (continuer_jeu) {
-        main_menu_option = 0;
-        
-        // Boucle selection d'options
-        while (selectionner_options) {
-            // On assigne la touche a l'option adequate
-            key = get_key();
-            switch (key) {
-                // Move options up
-                case UP:
-                    if (main_menu_option == 0) main_menu_option = 2;
-                    else main_menu_option -= 1;
-                    print_options(OPTIONS_SIZE, main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
-                    break;
-                
-                // Move options down
-                case DOWN:
-                    if (main_menu_option == 2) main_menu_option = 0;
-                    else main_menu_option += 1;
-                    print_options(OPTIONS_SIZE, main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
+    main_menu_option = 0;
+    
+    // Boucle selection d'options
+    while (selectionner_options) {
+        // On assigne la touche a l'option adequate
+        key = get_key();
+        switch (key) {
+            // Move options up
+            case UP:
+                if (main_menu_option == 0) main_menu_option = 2;
+                else main_menu_option -= 1;
+                print_options(OPTIONS_SIZE, main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
+                break;
+            
+            // Move options down
+            case DOWN:
+                if (main_menu_option == 2) main_menu_option = 0;
+                else main_menu_option += 1;
+                print_options(OPTIONS_SIZE, main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
+                break;
+
+            // Select option
+            case ENTER:
+                    // Jouer                        
+                    // Voir controles
+                    if (main_menu_option == 1) {
+                        // Print les controles et attendre a pressioner Enter pour revenit
+                        print_controls(CONTROLS_SIZE, main_menu_controls_row, main_menu_controls_column, FLUSH);
+                        while (get_key() != ENTER); 
+                        // Effacer les controles, print options a nouveau et positioner curseur a 0
+                        erase_multiline(controls_rows, main_menu_controls_row, main_menu_controls_column, FLUSH);
+                        print_options(OPTIONS_SIZE, 0, main_menu_options_row, main_menu_options_column, FLUSH);
+                        main_menu_option = 0;
+                    }
+                    // Quitter
+                    else if (main_menu_option == 2) {
+                        continuer_jeu = false;
+                        selectionner_options = false;
+                    }
                     break;
 
-                // Select option
-                case ENTER:
-                        // Jouer                        
-                        // Voir controles
-                        // Quitter
-                        if (main_menu_option == 2) {
-                            continuer_jeu = false;
-                            selectionner_options = false;
-                        }
-                        break;
-
-                // Key sans valeur 
-                default:
-                    break;
-            }
+            // Key sans valeur 
+            default:
+                break;
         }
     }
 

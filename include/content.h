@@ -23,25 +23,27 @@ const char OPTIONS[4][10] = {
 };
 
 // Controles
-const char CONTROLS[19][45] = {
-    "            Controles de selection          ",
-    "       🠡: Select. Option precedente      ",
-    "       🠣: Select. Option suivante        ",
-    "       ⮠: Select. Option en curseur      ",
+const char CONTROLS[21][45] = {
+    "    -------[ Controles d'option ]-------    ",
+    "      [^]: Select. Option precedente        ",
+    "      [v]: Select. Option suivante          ",
+    "  [ENTER]: Confirmer Option en curseur      ",
     "",
-    "               Controles de jeu             ",
-    "       🠡: Deplacer case vers le haut     ",
-    "       🠣: Deplacer case vers le bas      ",
-    "       🠢: Deplacer case vers la droit    ",
-    "       🠠: Deplacer case vers la gauche   ",
     "",
-    "                  But du jeu                ",
-    "   Le but du jeu est d'ordonner toutes les  ",
-    "   cases de 1 a 15 en deplaceant la case    ",
-    "   vide pour reemplacer les cases numerotees",
-    "   de 1 a 15                                ",
+    "    -------[  Controles du jeu  ]-------    ",
+    "      [^]  Deplacer case vers le haut       ",
+    "      [v]  Deplacer case vers le bas        ",
+    "      [>]  Deplacer case vers la droit      ",
+    "      [<]  Deplacer case vers la gauche     ",
     "",
-    "                  > Revenir                 ",
+    "",
+    "    -------[   Comment jouer?   ]-------    ",
+    " Le but du jeu est de reordonner toutes les ",
+    "    cases de 1 a 15 en deplaceant la case   ",
+    "  vide pour reemplacer les cases numerotes  ",
+    "                 de 1 a 15                  ",
+    "",
+    "                 > Revenir                  ",
     "\r"
 };
 
