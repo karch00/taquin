@@ -15,7 +15,26 @@ int main() {
     // Init des variables de terminal
     struct termios termconf;
     int terminal_size[2];
+    // Variables de selection
+    int pressed_key;
+    int main_menu_option;
+    bool continue_main_loop = true;
+    // Variables de taille
+    int title_rows = TITLE_SIZE[0];
+    int title_columns = TITLE_SIZE[1];
+    int options_rows = OPTIONS_SIZE[0];
+    int options_columns = OPTIONS_SIZE[1];
+    int controls_rows = CONTROLS_SIZE[0];
+    int controls_columns = CONTROLS_SIZE[1];
+    // Variables de coordonnees pour le main menu
+    int main_menu_title_row = (terminal_size[0] / 2) - title_rows;  
+    int main_menu_title_column = (terminal_size[1] / 2) - (TITLE_SIZE[1] / 2) + 1;
+    int main_menu_options_row = main_menu_title_row + title_rows + 2;
+    int main_menu_options_column = main_menu_title_column + (title_columns / 2) - (options_columns / 2);
+    int main_menu_controls_row = main_menu_title_row + title_rows + 2;
+    int main_menu_controls_column = main_menu_title_column + (title_columns / 2) - (controls_columns / 2);
 
+    // Initialisation des variables de terminal
     tcgetattr(STDIN_FILENO, &termconf);
     if (get_termsize(terminal_size)) return -1; // Si le code return n'est 0, error
     
@@ -34,41 +53,21 @@ int main() {
     srand(time(NULL));
 
 
-
-
+ 
     // ###################
-    // ####### JEU #######
+    // #### MAIN LOOP ####
     // ###################
-    // Variables de selection
-    int key;
-    int main_menu_option;
-    bool continuer_jeu = true;
-    bool selectionner_options = true;
-    // Variables de taille
-    int title_rows = TITLE_SIZE[0];
-    int title_columns = TITLE_SIZE[1];
-    int options_rows = OPTIONS_SIZE[0];
-    int options_columns = OPTIONS_SIZE[1];
-    int controls_rows = CONTROLS_SIZE[0];
-    int controls_columns = CONTROLS_SIZE[1];
-    // Variables de coordonnees pour le main menu
-    int main_menu_title_row = (terminal_size[0] / 2) - title_rows;  
-    int main_menu_title_column = (terminal_size[1] / 2) - (TITLE_SIZE[1] / 2) + 1;
-    int main_menu_options_row = main_menu_title_row + title_rows + 2;
-    int main_menu_options_column = main_menu_title_column + (title_columns / 2) - (options_columns / 2);
-    int main_menu_controls_row = main_menu_title_row + title_rows + 2;
-    int main_menu_controls_column = main_menu_title_column + (title_columns / 2) - (controls_columns / 2);
 
     // On print le menu principal
     print_main_menu(TITLE_SIZE, OPTIONS_SIZE,main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);
-
     main_menu_option = 0;
     
     // Boucle selection d'options
-    while (selectionner_options) {
-        // On assigne la touche a l'option adequate
-        key = get_key();
-        switch (key) {
+    while (continue_main_loop) {
+        // On attend l'appuye d'une touche
+        pressed_key = get_key();
+        // On associe la touche a une option valide
+        switch (pressed_key) {
             // Move options up
             case UP:
                 if (main_menu_option == 0) main_menu_option = 2;
@@ -86,8 +85,11 @@ int main() {
             // Select option
             case ENTER:
                     // Jouer                        
+                    if (main_menu_option == 0) {
+                        // Logique du jeu ici
+                    }
                     // Voir controles
-                    if (main_menu_option == 1) {
+                    else if (main_menu_option == 1) {
                         // Print les controles et attendre a pressioner Enter pour revenit
                         print_controls(CONTROLS_SIZE, main_menu_controls_row, main_menu_controls_column, FLUSH);
                         while (get_key() != ENTER); 
@@ -98,8 +100,7 @@ int main() {
                     }
                     // Quitter
                     else if (main_menu_option == 2) {
-                        continuer_jeu = false;
-                        selectionner_options = false;
+                        continue_main_loop = false;
                     }
                     break;
 
@@ -110,7 +111,6 @@ int main() {
     }
 
 
-    
     
     // ###################
     // ##### CLEANUP #####

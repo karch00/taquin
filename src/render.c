@@ -115,7 +115,7 @@ int print_title(const int title_size[2], int row, int column, struct gradient gr
 }
 
 // Print les options initiales. Ajoute un curseur a la ligne de loption selectionnee
-// La position est equivalente au corner top left. Ajuste automatiquement pour afficher le curseur.
+// La position est equivalente au corner top left. Ajuste automatiquement pour afficher le curseur a l'option.
 int print_options(const int options_size[2], int option, int row, int column, int flush) {
     // Variables de taille
     int options_rows = options_size[0];
