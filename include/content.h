@@ -47,4 +47,13 @@ const char CONTROLS[21][45] = {
     "\r"
 };
 
+// Case
+const char CASE[5][11] = {
+    "+--------+",
+    "|        |",
+    "|   %s   |",
+    "|        |",
+    "+--------+"
+};
+
 #endif
