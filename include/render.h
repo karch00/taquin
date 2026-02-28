@@ -12,6 +12,7 @@ int print_title(const int title_size[2], int row, int column, struct gradient gr
 int print_options(const int options_size[2], int option, int row, int column, int flush);
 int print_controls(const int controls_size[2], int row, int column, int flush);
 int print_main_menu(const int title_size[2], const int options_size[2], int title_row, int title_column, int options_row, int options_column); 
-int print_gameboard(const int gameboard_size[2], int row, int column, int case_values[4][4]);
+void print_case(const int case_size[2], int row, int column, int case_value);
+int print_gameboard(const int case_size[2], int row, int column, int case_values[4][4]);
 
 #endif
