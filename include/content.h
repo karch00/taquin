@@ -28,6 +28,7 @@ const char CONTROLS[22][45] = {
     "      [^]: Select. Option precedente        ",
     "      [v]: Select. Option suivante          ",
     "  [ENTER]: Confirmer Option en curseur      ",
+    "      [q]: Quitter le jeu / Revenir         ",
     "",
     "",
     "    -------[  Controles du jeu  ]-------    ",
