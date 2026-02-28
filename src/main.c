@@ -14,7 +14,8 @@ int main() {
     // ####################
     
     // Activer demo de victoire
-    bool win_demo = false;
+    // UNIQUE POUR PRESENTATION
+    bool win_demo = true;
     // Init des variables de terminal
     struct termios termconf;
     int terminal_size[2];

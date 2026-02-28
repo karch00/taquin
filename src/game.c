@@ -72,12 +72,18 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
     // Variables de position
     int current_position[2], old_position[2];
     int case_values[4][4];
-    // Demonstration de victoire 
+   
+    // ------ Demonstration de victoire ------
     if (win_demo) {
-        int current_position[2] = {3, 2};
-        int old_position[2];
-        int case_values[4][4] = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12},{13,14,0,15}};
+        current_position[0] = 3;
+        current_position[1] = 2;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                case_values[i][j] = winning_array[i][j];
+            }
+        }
     }
+    // ---------------------------------------
     else init_case_values(case_values, current_position);
 
 
