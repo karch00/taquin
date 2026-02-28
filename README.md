@@ -19,13 +19,31 @@
  ----+----+----+----          ----+----+----+----
 ```
 
+### Controles
+
+> **[^]** - Option precedente / Deplacer case vide vers le haut<br>
+> **[>]** - Deplacer case vide vers la droite<br>
+> **[v]** - Option suivante / Deplacer case vide vers le bas<br>
+> **[<]** - Deplacer case vide vvers la gauche<br>
+
+> **[ENTER]** - Selectionner option<br>
+> **[q]** - Quitter le jeu / Aller vers le menu
+
 
 # Sources
-### Articles sur le fonctionnement de la Terminal, TTY & ANSI
+### Terminal, TTY & ANSI
 - [Linus akesson - TTY Demystified](https://www.linusakesson.net/programming/tty/)
 - [Ahmad Awais - Full stack of terminals explained](https://ahmadawais.com/the-full-stack-of-terminals-explained-terminal-shell-tty-console-posix-ansi-escapes-ptys/#part-1-the-vocabulary)
 - [Termios Manpage](https://www.man7.org/linux/man-pages/man3/termios.3.html)
 - [Wikipedia - ANSI Codes](https://en.wikipedia.org/wiki/ANSI_escape_code)
 
-### ASCII art
+### Langage C
+- [GeeksforGeeks](https://www.geeksforgeeks.org/c/c-programming-language/)
+- [Wikipedia - C data types](https://en.wikipedia.org/wiki/C_data_types)
+
+### Design, colors
 - [patorjk - ASCII art generator](https://patorjk.com/software/taag/)
+- [Pastel - CLI color tool](https://github.com/sharkdp/pastel)
+
+### Algorithmique
+- [Algorithme de Fish-Yate](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
