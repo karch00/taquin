@@ -23,7 +23,7 @@ const char OPTIONS[4][10] = {
 };
 
 // Controles
-const char CONTROLS[22][45] = {
+const char CONTROLS[23][45] = {
     "    -------[ Controles d'option ]-------    ",
     "      [^]: Select. Option precedente        ",
     "      [v]: Select. Option suivante          ",
