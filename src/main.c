@@ -37,7 +37,7 @@ int main() {
     int case_columns = CASE_SIZE[1];
     int gameboard_rows = case_rows * 4;
     int gameboard_columns = case_columns * 4;
-    // Variables de coordonnees pour le main menu
+    // Variables de coordonnees 
     int main_menu_title_row = (terminal_size[0] / 2) - title_rows;  
     int main_menu_title_column = (terminal_size[1] / 2) - (TITLE_SIZE[1] / 2) + 1;
     int main_menu_options_row = main_menu_title_row + title_rows + 2;
