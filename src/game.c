@@ -76,7 +76,7 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
     // ------ Demonstration de victoire ------
     if (win_demo) {
         current_position[0] = 3;
-        current_position[1] = 2;
+        current_position[1] = 3;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 case_values[i][j] = winning_array[i][j];
