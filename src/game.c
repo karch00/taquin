@@ -130,7 +130,13 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
                     swap_case(case_values, old_position, current_position);
                 }
                 break;
-            
+           
+            // Appuye sur q - quit
+            case QUIT:
+                // Cleanup et return
+                erase_multiline(case_size[0]*4 + 2, row, column, FLUSH);
+                return 0;
+
             // Touche non valide - Enter
             default: break;
         }

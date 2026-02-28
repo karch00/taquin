@@ -8,6 +8,7 @@
 #define LEFT 3
 #define RIGHT 4
 #define ENTER 5
+#define QUIT 6
 #define FLUSH true
 #define NOFLUSH false
 #define MAX_MULTIPRINT_ROWS 100

@@ -53,6 +53,7 @@ int get_key() {
         // On lis le premier caractere et on valide
         read(STDIN_FILENO, &byte1, 1);
         if (byte1 == '\n') return ENTER;
+        else if (byte1 == 'q') return QUIT;
         if (byte1 != '\033') continue;
 
         // Pareil pour le deuxieme

@@ -102,7 +102,7 @@ int main() {
                     }
                     // Voir controles
                     else if (main_menu_option == 1) {
-                        // Print les controles et attendre a pressioner Enter pour revenit
+                        // Print les controles et attendre a pressioner Enter oy quit pour revenir
                         print_controls(CONTROLS_SIZE, main_menu_controls_row, main_menu_controls_column, FLUSH);
                         while (get_key() != ENTER); 
                         // Effacer les controles, print options a nouveau et positioner curseur a 0
@@ -115,6 +115,10 @@ int main() {
                         continue_main_loop = false;
                     }
                     break;
+
+            // Appuye sur q - quit
+            case QUIT:
+                    continue_main_loop = false;
 
             // Key sans valeur 
             default: break;
