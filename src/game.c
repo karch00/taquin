@@ -65,21 +65,21 @@ void swap_case(int case_values[4][4], int old_pos[2], int new_pos[2]) {
 }
 
 // Loop principal du jeu - Toute la logique du jeu a lieu ici
-int game_loop(const int winning_array[4][4], const int case_size[2], int row, int column) {
+int game_loop(const int winning_array[4][4], const int case_size[2], int row, int column, bool win_demo) {
     // Init variables
     bool continue_game_loop = true;
     int pressed_key;
     // Variables de position
-    // ---- Comment 3 following for wi ndebug ----
-    //int current_position[2], old_position[2];
-    //int case_values[4][4];
-    //init_case_values(case_values, current_position);
-    // -------------------------------------------
-    // ---- Uncomment following for win debug ----
-    int current_position[2] = {3, 2};
-    int old_position[2];
-    int case_values[4][4] = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12},{13,14,0,15}};
-    // -------------------------------------------
+    int current_position[2], old_position[2];
+    int case_values[4][4];
+    // Demonstration de victoire 
+    if (win_demo) {
+        int current_position[2] = {3, 2};
+        int old_position[2];
+        int case_values[4][4] = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12},{13,14,0,15}};
+    }
+    else init_case_values(case_values, current_position);
+
 
     // Cleanup des options et Print tableau initial
     erase_multiline(3, row, column, FLUSH);

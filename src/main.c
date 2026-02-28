@@ -12,7 +12,9 @@ int main() {
     // ####################
     // ####### INIT #######
     // ####################
-
+    
+    // Activer demo de victoire
+    bool win_demo = false;
     // Init des variables de terminal
     struct termios termconf;
     int terminal_size[2];
@@ -92,7 +94,7 @@ int main() {
             case ENTER:
                     // Jouer                        
                     if (main_menu_option == 0) {
-                        game_loop(WINNING_ARRAY, CASE_SIZE, gameboard_row, gameboard_column);
+                        game_loop(WINNING_ARRAY, CASE_SIZE, gameboard_row, gameboard_column, win_demo);
                         // Effacer le jeu, print options a nouveau et pos curseur a 0
                         erase_multiline(case_rows*4 + 3, gameboard_row, gameboard_column, NOFLUSH);
                         print_options(OPTIONS_SIZE, 0, main_menu_options_row, main_menu_options_column, FLUSH);
