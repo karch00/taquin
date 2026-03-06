@@ -5,6 +5,9 @@
 #include "../include/render.h"
 #include "../include/io.h"
 #include "../include/game.h"
+#include "../include/constants.h"
+#include "../include/content.h"
+
 
 // On shuffle un array contenant des chiffres de 0 a 15 en utilisant Fisher-Yates
 void shuffle_case_values(int case_values[16]) {
@@ -65,7 +68,7 @@ void swap_case(int case_values[4][4], int old_pos[2], int new_pos[2]) {
 }
 
 // Loop principal du jeu - Toute la logique du jeu a lieu ici
-int game_loop(const int winning_array[4][4], const int case_size[2], int row, int column, bool win_demo) {
+int game_loop(int row, int column, bool win_demo) {
     // Init variables
     bool continue_game_loop = true;
     int pressed_key;
@@ -79,7 +82,7 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
         current_position[1] = 3;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                case_values[i][j] = winning_array[i][j];
+                case_values[i][j] = WINNING_ARRAY[i][j];
             }
         }
     }
@@ -89,7 +92,7 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
 
     // Cleanup des options et Print tableau initial
     erase_multiline(3, row, column, FLUSH);
-    print_gameboard(case_size, row, column, case_values);
+    print_gameboard(row, column, case_values);
 
     // Boucle principal
     while (continue_game_loop) {
@@ -140,7 +143,7 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
             // Appuye sur q - quit
             case QUIT:
                 // Cleanup et return
-                erase_multiline(case_size[0]*4 + 2, row, column, FLUSH);
+                erase_multiline(CASE_SIZE[0]*4 + 2, row, column, FLUSH);
                 return 0;
 
             // Touche non valide - Enter
@@ -148,14 +151,14 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
         }
 
         // On re-print le tableau
-        if (print_gameboard(case_size, row, column, case_values)) return -1;
+        if (print_gameboard(row, column, case_values)) return -1;
 
         // On check for win, si no win on continue
         bool win = true;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 // Si un valeur ne correspond pas a celui du gagnant, on signale qu'on a pas gagne
-                if (case_values[i][j] != winning_array[i][j]) {
+                if (case_values[i][j] != WINNING_ARRAY[i][j]) {
                     win = false;
                     break;
                 }
@@ -171,15 +174,15 @@ int game_loop(const int winning_array[4][4], const int case_size[2], int row, in
     
     // Print du texte de victoire
     // PLACEHOLDER
-    print_line("----{ VICTOIRE }----", row + case_size[0]*4 + 1, column + (case_size[1]*4)/2 - 10, NOFLUSH);
-    print_line("> Revenir", row + case_size[0]*4 + 2, column + (case_size[1]*4)/2 - 5, NOFLUSH);
+    print_line("----{ VICTOIRE }----", row + CASE_SIZE[0]*4 + 1, column + (CASE_SIZE[1]*4)/2 - 10, NOFLUSH);
+    print_line("> Revenir", row + CASE_SIZE[0]*4 + 2, column + (CASE_SIZE[1]*4)/2 - 5, NOFLUSH);
     fflush(stdout);
     
     // Attendre appuyer Enter pour revenir
     while (get_key() != ENTER);
 
     // Cleanup
-    erase_multiline(case_size[0]*4 + 2, row, column, FLUSH);
+    erase_multiline(CASE_SIZE[0]*4 + 2, row, column, FLUSH);
 
     return 0;
 }

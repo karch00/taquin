@@ -71,7 +71,7 @@ int main() {
     // ###################
 
     // On print le menu principal
-    print_main_menu(TITLE_SIZE, OPTIONS_SIZE, main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);
+    print_main_menu(main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);
     main_menu_option = 0;
     
     // Boucle selection d'options
@@ -84,34 +84,34 @@ int main() {
             case UP:
                 if (main_menu_option == 0) main_menu_option = 2;
                 else main_menu_option -= 1;
-                print_options(OPTIONS_SIZE, main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
+                print_options(main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
                 break;
             
             // Move options down
             case DOWN:
                 if (main_menu_option == 2) main_menu_option = 0;
                 else main_menu_option += 1;
-                print_options(OPTIONS_SIZE, main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
+                print_options(main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
                 break;
 
             // Select option
             case ENTER:
                     // Jouer                        
                     if (main_menu_option == 0) {
-                        game_loop(WINNING_ARRAY, CASE_SIZE, gameboard_row, gameboard_column, win_demo);
+                        game_loop(gameboard_row, gameboard_column, win_demo);
                         // Effacer le jeu, print options a nouveau et pos curseur a 0
                         erase_multiline(case_rows*4 + 3, gameboard_row, gameboard_column, NOFLUSH);
-                        print_options(OPTIONS_SIZE, 0, main_menu_options_row, main_menu_options_column, FLUSH);
+                        print_options(0, main_menu_options_row, main_menu_options_column, FLUSH);
                         main_menu_option = 0;
                     }
                     // Voir controles
                     else if (main_menu_option == 1) {
                         // Print les controles et attendre a pressioner Enter oy quit pour revenir
-                        print_controls(CONTROLS_SIZE, main_menu_controls_row, main_menu_controls_column, FLUSH);
+                        print_controls(main_menu_controls_row, main_menu_controls_column, FLUSH);
                         while (get_key() != ENTER); 
                         // Effacer les controles, print options a nouveau et positioner curseur a 0
                         erase_multiline(controls_rows, main_menu_controls_row, main_menu_controls_column, NOFLUSH);
-                        print_options(OPTIONS_SIZE, 0, main_menu_options_row, main_menu_options_column, FLUSH);
+                        print_options(0, main_menu_options_row, main_menu_options_column, FLUSH);
                         main_menu_option = 0;
                     }
                     // Quitter
