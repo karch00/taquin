@@ -31,7 +31,7 @@ int main() {
     bool continue_main_loop = true;
     // Variables de taille
     int title_rows = TITLE_SIZE[0];
-    int title_columns = TITLE_SIZE[1];
+    int title_columns = 60; // Statique car characteres non uniformes
     int options_rows = OPTIONS_SIZE[0];
     int options_columns = OPTIONS_SIZE[1];
     int controls_rows = CONTROLS_SIZE[0];
@@ -42,7 +42,7 @@ int main() {
     int gameboard_columns = case_columns * 4;
     // Variables de coordonnees 
     int main_menu_title_row = (int)(terminal_size[0] / 2.5) - title_rows;  
-    int main_menu_title_column = (terminal_size[1] / 2) - (TITLE_SIZE[1] / 2) + 1;
+    int main_menu_title_column = (terminal_size[1] / 2) - (title_columns / 2) + 1;
     int main_menu_options_row = main_menu_title_row + title_rows + 2;
     int main_menu_options_column = main_menu_title_column + (title_columns / 2) - (options_columns / 2);
     int main_menu_controls_row = main_menu_title_row + title_rows + 2;

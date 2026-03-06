@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/render.h"
-#include "../include/io.h"
-#include "../include/game.h"
 #include "../include/constants.h"
 #include "../include/content.h"
+#include "../include/io.h"
+#include "../include/render.h"
+#include "../include/game.h"
 
 
 // On shuffle un array contenant des chiffres de 0 a 15 en utilisant Fisher-Yates

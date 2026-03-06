@@ -35,7 +35,7 @@ const struct gradient coil = {
     {0  , 255, 255}
 };
 const struct gradient kalcite = {
-    {180, 200, 170},  
+    {160, 180, 150},  
     {230, 240, 225}   
 };
 const struct gradient talulah = {

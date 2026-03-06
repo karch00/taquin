@@ -2,7 +2,7 @@
 #define CONTENT_H
 
 // Titre
-extern const char TITLE[11][121];
+extern const char TITLE[11][157];
 extern const int TITLE_SIZE[2];
 
 // Options
