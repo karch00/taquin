@@ -83,10 +83,10 @@ void get_gradient_step(struct gradient grad, int lines, float rgb_output[3]) {
 
 // Print le titre a la position row, column avec une gradiente appliquee
 // Anchor de position top left.
-int print_title(const int title_size[2], int row, int column, struct gradient grad, int flush) {
+int print_title(int row, int column, struct gradient grad, int flush) {
     // Variables de taille
-    int title_rows = title_size[0];
-    int title_columns = title_size[1];
+    int title_rows = TITLE_SIZE[0];
+    int title_columns = TITLE_SIZE[1];
     // Variables de string
     char formatted_title[title_rows][title_columns + 25];
     char formatted_line[title_columns + 25];
@@ -125,10 +125,10 @@ int print_title(const int title_size[2], int row, int column, struct gradient gr
 
 // Print les options initiales. Ajoute un curseur a la ligne de loption selectionnee
 // Anchor de position top left. Ajuste automatiquement pour afficher le curseur a l'option.
-int print_options(const int options_size[2], int option, int row, int column, int flush) {
+int print_options(int option, int row, int column, int flush) {
     // Variables de taille
-    int options_rows = options_size[0];
-    int options_columns = options_size[1];
+    int options_rows = OPTIONS_SIZE[0];
+    int options_columns = OPTIONS_SIZE[1];
     char formatted_option[options_columns + 2];
     
     // Print des options
@@ -150,10 +150,10 @@ int print_options(const int options_size[2], int option, int row, int column, in
 }
 
 // Print les controles. Anchor de position top left.
-int print_controls(const int controls_size[2], int row, int column, int flush) {
+int print_controls(int row, int column, int flush) {
     // Variables de taille
-    int controls_rows = controls_size[0];
-    int controls_columns = controls_size[1];
+    int controls_rows = CONTROLS_SIZE[0];
+    int controls_columns = CONTROLS_SIZE[1];
 
     // Print des controles
     for (int i = 0; i < controls_rows; i++) {
@@ -166,22 +166,22 @@ int print_controls(const int controls_size[2], int row, int column, int flush) {
 
 // Print main menu - Titre et options initiales
 // Print le titre et les options initiales sans padding, avec les options sous le titre au centre. Anchor top left.
-int print_main_menu(const int title_size[2], const int options_size[2], int title_row, int title_column, int options_row, int options_column) {
+int print_main_menu(int title_row, int title_column, int options_row, int options_column) {
     // Gradiente aleatoire
     struct gradient grad = get_gradient();
 
     // Print titre et options, flush
-    print_title(title_size, title_row, title_column, grad, NOFLUSH);
-    print_options(options_size, 0, options_row, options_column, NOFLUSH);
+    print_title(title_row, title_column, grad, NOFLUSH);
+    print_options(0, options_row, options_column, NOFLUSH);
     return fflush(stdout);
 }
 
 // Pint case a la position
 // Anchor top left
-void print_case(const int case_size[2], int row, int column, int case_value) {
+void print_case(int row, int column, int case_value) {
     // Init variables
-    int case_rows = case_size[0];
-    int case_columns = case_size[1];
+    int case_rows = CASE_SIZE[0];
+    int case_columns = CASE_SIZE[1];
     int row_to_format = case_rows / 2;
     char preformatted_row[case_columns+1], formatted_row[case_columns];
     
@@ -207,16 +207,16 @@ void print_case(const int case_size[2], int row, int column, int case_value) {
 
 // Print l'ensemble de lignes de cases pour former le tableau complet
 // Anchor de position top left.
-int print_gameboard(const int case_size[2], int row, int column, int case_values[4][4]) {
+int print_gameboard(int row, int column, int case_values[4][4]) {
     // Variables Init
-    int case_rows = case_size[0];
-    int case_columns = case_size[1];
+    int case_rows = CASE_SIZE[0];
+    int case_columns = CASE_SIZE[1];
 
     // Loop de print
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             // On print chaque case a sa position
-            print_case(case_size, row + case_rows*i, column + case_columns*j, case_values[i][j]);
+            print_case(row + case_rows*i, column + case_columns*j, case_values[i][j]);
         }
     }
     return fflush(stdout);
