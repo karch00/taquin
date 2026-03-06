@@ -6,7 +6,10 @@
 #include "../include/termctrl.h"
 #include "../include/io.h"
 #include "../include/game.h"
+#include "../include/content.h"
 #include "../include/constants.h"
+
+
 
 int main() {
     // ####################
@@ -15,7 +18,7 @@ int main() {
     
     // Activer demo de victoire
     // UNIQUE POUR PRESENTATION
-    bool win_demo = true;
+    bool win_demo = false;
     // Init des variables de terminal
     struct termios termconf;
     int terminal_size[2];
@@ -38,7 +41,7 @@ int main() {
     int gameboard_rows = case_rows * 4;
     int gameboard_columns = case_columns * 4;
     // Variables de coordonnees 
-    int main_menu_title_row = (terminal_size[0] / 2) - title_rows;  
+    int main_menu_title_row = (int)(terminal_size[0] / 2.5) - title_rows;  
     int main_menu_title_column = (terminal_size[1] / 2) - (TITLE_SIZE[1] / 2) + 1;
     int main_menu_options_row = main_menu_title_row + title_rows + 2;
     int main_menu_options_column = main_menu_title_column + (title_columns / 2) - (options_columns / 2);
@@ -68,7 +71,7 @@ int main() {
     // ###################
 
     // On print le menu principal
-    print_main_menu(TITLE_SIZE, OPTIONS_SIZE,main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);
+    print_main_menu(TITLE_SIZE, OPTIONS_SIZE, main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);
     main_menu_option = 0;
     
     // Boucle selection d'options

@@ -6,6 +6,7 @@
 #include "../include/render.h"
 
 
+
 // Liste de gradients
 // rgb_i = rgb initial
 // rgb_f = rgb final
@@ -33,11 +34,17 @@ const struct gradient coil = {
     {255, 165, 0  },
     {0  , 255, 255}
 };
-const struct gradient kaltsit = {
+const struct gradient kalcite = {
     {180, 200, 170},  
     {230, 240, 225}   
 };
-const struct gradient GRADIENT_LIST[7] = {pink2blue, red2purple, forest, pink2yellow, weathergirl, coil, kaltsit};
+const struct gradient talulah = {
+    {225, 105, 45},
+    {95, 20, 20}
+};
+
+const struct gradient GRADIENT_LIST[8] = {pink2blue, red2purple, forest, pink2yellow, weathergirl, coil, kalcite, talulah};
+//const struct gradient GRADIENT_LIST[1] = {talulah};
 const int GRADIENT_LIST_SIZE = sizeof(GRADIENT_LIST) / sizeof(GRADIENT_LIST[0]);
 
 

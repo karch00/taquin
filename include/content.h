@@ -2,60 +2,19 @@
 #define CONTENT_H
 
 // Titre
-const char TITLE[9][62] = {
-    " _________  ________  ________  ___  ___  ___  ________      ",
-    "|\\___   ___\\\\   __  \\|\\   __  \\|\\  \\|\\  \\|\\  \\|\\   ___  \\    ",
-    "\\|___ \\  \\_\\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\\\\\  \\ \\  \\ \\  \\\\ \\  \\   ",
-    "     \\ \\  \\ \\ \\   __  \\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\  \\ \\  \\\\ \\  \\  ",
-    "      \\ \\  \\ \\ \\  \\ \\  \\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\  \\ \\  \\\\ \\  \\ ",
-    "       \\ \\__\\ \\ \\__\\ \\__\\ \\_____  \\ \\_______\\ \\__\\ \\__\\\\ \\__\\",
-    "        \\|__|  \\|__|\\|__|\\|___| \\__\\|_______|\\|__|\\|__| \\|__|",
-    "                               \\|__|                         ",
-    "\r"
-};
+extern const char TITLE[11][121];
+extern const int TITLE_SIZE[2];
 
 // Options
-const char OPTIONS[4][10] = {
-    "  Jouer  ",
-    "Controles",
-    " Quitter ",
-    "\r"
-};
+extern const char OPTIONS[4][10];
+extern const int OPTIONS_SIZE[2];
 
 // Controles
-const char CONTROLS[23][45] = {
-    "    -------[ Controles d'option ]-------    ",
-    "      [^]: Select. Option precedente        ",
-    "      [v]: Select. Option suivante          ",
-    "  [ENTER]: Confirmer Option en curseur      ",
-    "      [q]: Quitter le jeu / Revenir         ",
-    "",
-    "",
-    "    -------[  Controles du jeu  ]-------    ",
-    "      [^]  Deplacer case vers le haut       ",
-    "      [v]  Deplacer case vers le bas        ",
-    "      [>]  Deplacer case vers la droit      ",
-    "      [<]  Deplacer case vers la gauche     ",
-    "",
-    "",
-    "    -------[   Comment jouer?   ]-------    ",
-    " Le but du jeu est de reordonner toutes les ",
-    "    cases de 1 a 15 en deplaceant la case   ",
-    "  vide pour reemplacer les cases adjacentes ",
-    "   jusqu'a avoir ordonnee toutes les cases  ",
-    "     avec la case vide en derniere place    ",
-    "",
-    "                 > Revenir                  ",
-    "\r"
-};
+extern const char CONTROLS[23][45];
+extern const int CONTROLS_SIZE[2];
 
 // Case
-const char CASE[5][11] = {
-    "+--------+",
-    "|        |",
-    "|   %s   |",
-    "|        |",
-    "+--------+"
-};
+extern const char CASE[5][11];
+extern const int CASE_SIZE[2];
 
 #endif
