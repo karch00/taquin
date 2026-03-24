@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include <termios.h> // Permet Control des attributes terminal
-#include <unistd.h> // Permet d'utiliser la defintion STDIN_FILENO pour indiquer stdin=file terminal ainsi que des fonctions comme read
-#include <stdbool.h> // Permet true/false
-#include <sys/ioctl.h> // Control i/o, permet de lire la taille de terminal
-#include "../include/termctrl.h" // Header pour ce code
+#include <termios.h>
+#include <unistd.h> 
+#include <stdbool.h> 
+#include <sys/ioctl.h> 
+#include "../include/termctrl.h"
 
 
 // Toggle raw et echo mode pour avoir une experience TUI
