@@ -62,7 +62,7 @@ C'est ainsi qu'on manipule les états du terminal et le texte affiché.
 > Exécutez la commande `tty` sur le premier et copiez le chemin.
 >
 > Sur le deuxième, exécutez la commande<br>
-> `echo "Hello" | tee {CHEMIN}`<br>
+> `echo "Hello" | sudo tee {CHEMIN}`<br>
 > 
 > Regardez ce qui s'affiche dans le premier terminal.
  
