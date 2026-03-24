@@ -15,9 +15,9 @@
 #define MAX_MULTIPRINT_COLUMNS 1024
 
 void clear_terminal();
-int print_line(const char *text, int row, int column, bool flush);
-int erase_line(int row, int column, bool flush);
-int erase_multiline(int lines, int row, int column, bool flush);
+void print_line(const char *text, int row, int column, bool flush);
+void erase_line(int row, int column, bool flush);
+void erase_multiline(int lines, int row, int column, bool flush);
 int get_key();
 
 #endif

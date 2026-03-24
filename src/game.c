@@ -15,20 +15,22 @@ void shuffle_case_values(int case_values[16]) {
     int tmp;
     int max_idx, selected_idx;
     int values[16];
-    // Generation du tableau et max_idx initial
+
+    // Generation du tableau de valeurs ordonnee et max_idx initial
     for (int i = 0; i < 16; i++) values[i] = i;
     max_idx = 15;
 
     // Shuffle values
     for (int i = 0; i < 16; i++) {
-        // Index aleatoire
+        // Index de case aleatoire
         if (max_idx) selected_idx = rand() % max_idx;
         else selected_idx = 0;
 
-        // Append a case_values
+        // Append la case avec l'index selectionne a case_values
         case_values[i] = values[selected_idx];
 
         // On swap le dernier element des valeurs et on diminue l'index maximal
+        // Dernier element (element deja dans case_values) ne peux pas etre selectionne a nouveau
         tmp = values[selected_idx];
         values[selected_idx] = values[max_idx];
         values[max_idx] = tmp;
@@ -37,17 +39,18 @@ void shuffle_case_values(int case_values[16]) {
     }
 }
 
-// On assignel es valeurs de l'array uni-dimensionel a celui de l'array des cases de jeu 2D
+// On assigne les valeurs de l'array uni-dimensionel a celui de l'array des cases de jeu 2D
 void init_case_values(int case_values[4][4], int current_position[2]) {
     // Init variables
-    int raw_case_values[16];
-    shuffle_case_values(raw_case_values);
+    int unidim_case_values[16];
+    shuffle_case_values(unidim_case_values);
 
     // Assign values
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            case_values[i][j] = raw_case_values[i*4+j];
-            // Assign current position si value = 0
+            case_values[i][j] = unidim_case_values[i*4+j];
+            
+            // Assign current position quand case 0 (case vide)
             if (case_values[i][j] == 0) {
                 current_position[0] = i;
                 current_position[1] = j;
@@ -68,52 +71,54 @@ void swap_case(int case_values[4][4], int old_pos[2], int new_pos[2]) {
 }
 
 // Loop principal du jeu - Toute la logique du jeu a lieu ici
-int game_loop(int row, int column, bool win_demo) {
-    // Init variables
+// On passe en parametres la position de la case vide
+// win_demo permet de gagner en 1 mouvement
+void game_loop(int row, int column, bool win_demo) {
+    // Variables de jeu
     bool continue_game_loop = true;
     int pressed_key;
-    // Variables de position
+    // Variables de position de case
     int current_position[2], old_position[2];
     int case_values[4][4];
    
-    // ------ Demonstration de victoire ------
+    // Si on passe en parametre win_demo, on initialise un tableau a ganger en 1 mouvement
     if (win_demo) {
         current_position[0] = 3;
         current_position[1] = 3;
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 case_values[i][j] = WINNING_ARRAY[i][j];
             }
         }
     }
-    // ---------------------------------------
+    // On initialise un tableau aleatoire sinon
     else init_case_values(case_values, current_position);
 
-
-    // Cleanup des options et Print tableau initial
+    // Cleanup des options et on print le tableau initial
     erase_multiline(3, row, column, FLUSH);
     print_gameboard(row, column, case_values);
 
     // Boucle principal
     while (continue_game_loop) {
-        // Get key
         pressed_key = get_key();
         
         // Action dependant de la touche
         switch (pressed_key) {
-            // On deplace vers le haut
+            // On se deplace vers le haut
             case UP:
                 // Si on est pas a la limite superieure, deplacer vers haut
                 if(current_position[0] > 0) {
-                    // Copy block de memoire pour copier array de position vers old position
+                    // Copy valeur dans block de memoire de notre position actuelle vers position ancienne
                     memcpy(old_position, current_position, sizeof(old_position));
-                    // Decrement index des lignes et swap
+                    // Decrement le valeur de la position actuelle
                     current_position[0]--;
+                    // On echange les cases dans le tableau
                     swap_case(case_values, old_position, current_position);
                 }
                 break;
             
-            // On deplace vers le bas
+            // On se deplace vers le bas
             case DOWN:
                 if(current_position[0] < 3) {
                     memcpy(old_position, current_position, sizeof(old_position));
@@ -142,47 +147,47 @@ int game_loop(int row, int column, bool win_demo) {
            
             // Appuye sur q - quit
             case QUIT:
-                // Cleanup et return
+                // Cleanup et return au menu principal
                 erase_multiline(CASE_SIZE[0]*4 + 2, row, column, FLUSH);
-                return 0;
-
-            // Touche non valide - Enter
-            default: break;
+                return;
+            
+            // Touche non valide, on appuye mais on break pas le switch
+            default:
+                pressed_key = get_key();
         }
 
         // On re-print le tableau
-        if (print_gameboard(row, column, case_values)) return -1;
+        print_gameboard(row, column, case_values);
 
-        // On check for win, si no win on continue
+        // On check pour victoire, si pas de victoire on continue
+        // On parcour le tableau en ordre
         bool win = true;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                // Si un valeur ne correspond pas a celui du gagnant, on signale qu'on a pas gagne
+                // Si un des valeurs ne correspond pas a celui du gagnant, on signale qu'on a pas gagne
                 if (case_values[i][j] != WINNING_ARRAY[i][j]) {
                     win = false;
                     break;
                 }
             }
-            // Si on a pas gagne, on sort du boucle
+            // Si on gagne, on sort du boucle
             if (win == false) break;
         }
-        // Si on a gagne, on sort du boucle principal
+
+        // Si on gagne, on indique qu'on sort du boucle principal apres finir l'iteration
         if (win) {
             continue_game_loop = false;
         }
     }
     
-    // Print du texte de victoire
-    // PLACEHOLDER
+    // Print du texte de victoire sous le tableau
     print_line("----{ VICTOIRE }----", row + CASE_SIZE[0]*4 + 1, column + (CASE_SIZE[1]*4)/2 - 10, NOFLUSH);
     print_line("> Revenir", row + CASE_SIZE[0]*4 + 2, column + (CASE_SIZE[1]*4)/2 - 5, NOFLUSH);
     fflush(stdout);
     
-    // Attendre appuyer Enter pour revenir
-    while (get_key() != ENTER);
-
-    // Cleanup
-    erase_multiline(CASE_SIZE[0]*4 + 2, row, column, FLUSH);
-
-    return 0;
+    // Attendre appuyer Enter ou q pour revenir
+    while (true) {
+        pressed_key = get_key();
+        if (pressed_key == ENTER || pressed_key == QUIT) break;
+    };
 }

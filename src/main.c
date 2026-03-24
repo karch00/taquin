@@ -1,3 +1,4 @@
+#include <string.h>
 #include <time.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -11,27 +12,25 @@
 
 
 
-int main() {
-    // ####################
-    // ####### INIT #######
-    // ####################
-    
-    // Activer demo de victoire
-    // UNIQUE POUR PRESENTATION
+int main(int argc, char *argv[]) {
+    // Init variable demonstration victoire
     bool win_demo = false;
     // Init des variables de terminal
     struct termios termconf;
     int terminal_size[2];
     // Initialisation des variables de terminal
     tcgetattr(STDIN_FILENO, &termconf);
-    if (get_termsize(terminal_size)) return -1; // Si le code return n'est 0, error
+    if (get_termsize(terminal_size)) {
+        printf("Erreur: Impossible de lire taille de terminal!\n");
+        return 1;
+    }
     // Variables de selection
     int pressed_key;
     int main_menu_option;
     bool continue_main_loop = true;
     // Variables de taille
     int title_rows = TITLE_SIZE[0];
-    int title_columns = 60; // Statique car characteres non uniformes
+    int title_columns = 60; // Hardcoded car caracteres non uniformes
     int options_rows = OPTIONS_SIZE[0];
     int options_columns = OPTIONS_SIZE[1];
     int controls_rows = CONTROLS_SIZE[0];
@@ -50,10 +49,15 @@ int main() {
     int gameboard_row = main_menu_title_row + title_rows + 2;
     int gameboard_column = main_menu_title_column + (title_columns / 2) - (gameboard_columns / 2);
 
+
+
+    // On set win_demo a true si argument -w
+    if (argc >= 2 && !strcmp(argv[1], "-w")) win_demo = true;
+
     // On assure un minimum de taille de terminal, sinon print et exit
     if (terminal_size[0]<MIN_TERMSIZE[0] || terminal_size[1]<MIN_TERMSIZE[1]) {
         printf("Taille de terminal trop petit!\n");
-        return 0;
+        return 1;
     }
     
     // On active le mode TUI complet
@@ -64,20 +68,14 @@ int main() {
     // Init random seed pour generer la gradiente et le tableau
     srand(time(NULL));
 
-
- 
-    // ###################
-    // #### MAIN LOOP ####
-    // ###################
-
     // On print le menu principal
     print_main_menu(main_menu_title_row, main_menu_title_column, main_menu_options_row, main_menu_options_column);
     main_menu_option = 0;
     
     // Boucle selection d'options
     while (continue_main_loop) {
-        // On attend l'appuye d'une touche
         pressed_key = get_key();
+        
         // On associe la touche a une option valide
         switch (pressed_key) {
             // Move options up
@@ -94,11 +92,13 @@ int main() {
                 print_options(main_menu_option, main_menu_options_row, main_menu_options_column, FLUSH);
                 break;
 
-            // Select option
+            // Selectionner option
             case ENTER:
                     // Jouer                        
                     if (main_menu_option == 0) {
+                        // On lance le boucle du jeu
                         game_loop(gameboard_row, gameboard_column, win_demo);
+
                         // Effacer le jeu, print options a nouveau et pos curseur a 0
                         erase_multiline(case_rows*4 + 3, gameboard_row, gameboard_column, NOFLUSH);
                         print_options(0, main_menu_options_row, main_menu_options_column, FLUSH);
@@ -106,9 +106,13 @@ int main() {
                     }
                     // Voir controles
                     else if (main_menu_option == 1) {
-                        // Print les controles et attendre a pressioner Enter oy quit pour revenir
+                        // Print les controles et attendre a pressioner Enter ou quit pour revenir
                         print_controls(main_menu_controls_row, main_menu_controls_column, FLUSH);
-                        while (get_key() != ENTER); 
+                        while (true) {
+                            pressed_key = get_key();
+                            if (pressed_key == ENTER || pressed_key == QUIT) break;
+                        };
+
                         // Effacer les controles, print options a nouveau et positioner curseur a 0
                         erase_multiline(controls_rows, main_menu_controls_row, main_menu_controls_column, NOFLUSH);
                         print_options(0, main_menu_options_row, main_menu_options_column, FLUSH);
@@ -118,6 +122,7 @@ int main() {
                     else if (main_menu_option == 2) {
                         continue_main_loop = false;
                     }
+
                     break;
 
             // Appuye sur q - quit
@@ -129,15 +134,10 @@ int main() {
         }
     }
 
-
-    
-    // ###################
-    // ##### CLEANUP #####
-    // ###################
-
-    // Return to normal
+    // Return to regular terminal
     toggle_tui_mode(termconf);
     toggle_cursor();
     clear_terminal();
+
     return 0;
 }

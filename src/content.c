@@ -14,7 +14,7 @@ const char TITLE[11][157] = {
 "                          ▒▒▒▒▒                             "
 };
 
-const int TITLE_SIZE[2] = {sizeof(TITLE) / sizeof(TITLE[0]), sizeof(TITLE[0]) / sizeof(TITLE[0][0])};
+const int TITLE_SIZE[2] = {11, 157};
 
 // Options
 const char OPTIONS[4][10] = {
@@ -23,7 +23,7 @@ const char OPTIONS[4][10] = {
     " Quitter ",
     "\r"
 };
-const int OPTIONS_SIZE[2] = {sizeof(OPTIONS) / sizeof(OPTIONS[0]), sizeof(OPTIONS[0]) / sizeof(OPTIONS[0][0])};
+const int OPTIONS_SIZE[2] = {4, 10};
 
 // Controles
 const char CONTROLS[23][45] = {
@@ -51,10 +51,9 @@ const char CONTROLS[23][45] = {
     "                 > Revenir                  ",
     "\r"
 };
-const int CONTROLS_SIZE[2] = {sizeof(CONTROLS) / sizeof(CONTROLS[0]), sizeof(CONTROLS[0]) / sizeof(CONTROLS[0][0])};
+const int CONTROLS_SIZE[2] = {23, 45};
 
 // Case
-const int CASE_SIZE[2] = {5, 11};
 const char CASE[5][11] = {
     "+--------+",
     "|        |",
@@ -62,3 +61,4 @@ const char CASE[5][11] = {
     "|        |",
     "+--------+"
 };
+const int CASE_SIZE[2] = {5, 11};

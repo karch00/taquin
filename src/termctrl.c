@@ -1,57 +1,65 @@
 #include <stdio.h>
-#include <termios.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <sys/ioctl.h>
-#include "../include/termctrl.h"
+#include <termios.h> // Permet Control des attributes terminal
+#include <unistd.h> // Permet d'utiliser la defintion STDIN_FILENO pour indiquer stdin=file terminal ainsi que des fonctions comme read
+#include <stdbool.h> // Permet true/false
+#include <sys/ioctl.h> // Control i/o, permet de lire la taille de terminal
+#include "../include/termctrl.h" // Header pour ce code
 
 
-// On toggle raw et echo mode pour avoir une experience TUI
+// Toggle raw et echo mode pour avoir une experience TUI
 int toggle_tui_mode(struct termios config) {
-    static int TUI_ENABLED = 0;
+    static int tui_enabled = 0; 
 
     // On change la valeur des bits
-    switch (TUI_ENABLED) {
+    switch (tui_enabled) {
         case 0:
-            // Modifie les flags de la terminal dans le scope local, pas global    
+            // Modifie les flags de la terminal dans le scope local, pas global   
+            // Modifie les bits precis par operation bitmask 
+            // Inverse mode Canonique et Echo. Si 1, devient 0. Si 0, devient 1.
+            // Pas besoin de modifier les flags si case 1 (desactiver mode TUI), on passe le config original pour faire un restore default
             config.c_lflag &= ~ (ICANON | ECHO);
             break;
     }
-    // Pas besoin de modifier les flags si case 1, on passe le config original
-    TUI_ENABLED = !TUI_ENABLED;
+    // Swap tui_enabled 0->1 ou 1->0
+    // Reste valide entre appels de fonction car static
+    tui_enabled = !tui_enabled;
 
     return tcsetattr(STDIN_FILENO, 0, &config);
 }
 
 // Active ou Desactive l'affichage du cursor dans la terminal en utilisant le code ANSI correspondant
 void toggle_cursor() {
-    static int CURSOR_ENABLED = 1;
+    static int cursor_enabled = 1;
     char mode;
 
     // On change le charactere d'echape correspondant a enable ou disable et on flip son valeur
-    switch (CURSOR_ENABLED) {
+    switch (cursor_enabled) {
         case 1:
+            // Mode cursor on
             mode = 'l';
             break;
         case 0:
+            // Cursor off
             mode = 'h';
             break;
     }
-    CURSOR_ENABLED = !CURSOR_ENABLED;
+    cursor_enabled = !cursor_enabled;
  
     printf("\033[?25%c", mode);
 }
 
-// Prend la taille de la terminal dans l'etat actuel en rows et columns
+// Get et Assigne la taille de la terminal dans l'etat actuel en rows et columns
 int get_termsize(int output[2]) {
     // Structure window size, on prend sa valeur depuis le file de terminal
     int columns, rows, code;
     struct winsize size;
-    code = ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
+
+    // Return si erreur seulement (code!=0)
+    if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size)) return 1;
 
     // On assigne les valeurs de colonne et row
     output[0] = size.ws_row;
     output[1] = size.ws_col;
 
-    return code;
+    return 0;
 }

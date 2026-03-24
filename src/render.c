@@ -45,7 +45,7 @@ const struct gradient talulah = {
 
 const struct gradient GRADIENT_LIST[8] = {pink2blue, red2purple, forest, pink2yellow, weathergirl, coil, kalcite, talulah};
 //const struct gradient GRADIENT_LIST[1] = {talulah};
-const int GRADIENT_LIST_SIZE = sizeof(GRADIENT_LIST) / sizeof(GRADIENT_LIST[0]);
+const int GRADIENT_LIST_SIZE = sizeof(GRADIENT_LIST) / sizeof(GRADIENT_LIST[0]); // Pas de valeur fixe car ajout de gradient toujours possible
 
 
 // Selectionne une gradiente aleatoire pour le titre
@@ -54,14 +54,14 @@ struct gradient get_gradient() {
     struct gradient selected_gradient;
    
     // On selectione une gradiente aleatoire
+    // Seed pour rand() initialisee en main.c
     random_idx = rand() % GRADIENT_LIST_SIZE;
     selected_gradient = GRADIENT_LIST[random_idx];
     
     return selected_gradient;
 }
 
-// Calcule combien de R, G et B on doit ajouter a chaque ligne pour avoir une gradiente lineaire
-// pour le nombre de lignes donne
+// Calcule combien de R, G et B on doit ajouter a chaque ligne pour avoir une gradiente lineaire pour la gradiente et le nombre de lignes donne
 void get_gradient_step(struct gradient grad, int lines, float rgb_output[3]) {
     int color_i, color_f, rgb_steps[3];
     
@@ -69,8 +69,7 @@ void get_gradient_step(struct gradient grad, int lines, float rgb_output[3]) {
         color_i = grad.rgb_i[i];
         color_f = grad.rgb_f[i];
 
-        // Si le color de depart est plus grande que celui d'arrive, step negative 
-        // Cast float pour arreter les betises de l'IDE
+        // Si le color de depart est plus grande que celui final, step negative 
         if (color_i > color_f) {
             rgb_output[i] = -(float)(color_i - color_f) / lines;
         }
@@ -81,9 +80,9 @@ void get_gradient_step(struct gradient grad, int lines, float rgb_output[3]) {
     }
 }
 
-// Print le titre a la position row, column avec une gradiente appliquee
+// Print le titre a la position [row, column] avec une gradiente appliquee. Si FLUSH alors print instantanee
 // Anchor de position top left.
-int print_title(int row, int column, struct gradient grad, int flush) {
+void print_title(int row, int column, struct gradient grad, int flush) {
     // Variables de taille
     int title_rows = TITLE_SIZE[0];
     int title_columns = TITLE_SIZE[1];
@@ -103,10 +102,11 @@ int print_title(int row, int column, struct gradient grad, int flush) {
     b_step = color_steps[2];
     
     // Parcour des lignes du titre pour appliquer format de couleur
+    // Ajoute le code ANSI pour etablir le couleur a tous les caracteres dans la ligne
     for (int i = 0; i < title_rows; i++) {
         // Format la ligne et append a formatted_title. On cast float en int pour R G B valides
         snprintf(formatted_line, title_columns+25, "\033[38;2;%i;%i;%im%s\033[0m", (int)r, (int)g, (int)b, TITLE[i]); 
-        strncpy(formatted_title[i], formatted_line, title_columns + 25);
+        strncpy(formatted_title[i], formatted_line, title_columns + 25); // 25 = len maximal du code ANSI
         
         // Ajout de step de couleur
         r += r_step;
@@ -118,17 +118,16 @@ int print_title(int row, int column, struct gradient grad, int flush) {
     for (int i = 0; i < title_rows; i++) {
         print_line(formatted_title[i], row+i, column, NOFLUSH);
     }
-    if (flush) return fflush(stdout);
-
-    return 0;
+    if (flush) fflush(stdout);
 }
 
-// Print les options initiales. Ajoute un curseur a la ligne de loption selectionnee
-// Anchor de position top left. Ajuste automatiquement pour afficher le curseur a l'option.
-int print_options(int option, int row, int column, int flush) {
+// Print les options initiales. Ajoute un curseur a la ligne de l'option selectionnee
+// Anchor de position top left. Adjuste automatiquement pour afficher le curseur a l'option selecitonnee
+void print_options(int option, int row, int column, int flush) {
     // Variables de taille
     int options_rows = OPTIONS_SIZE[0];
     int options_columns = OPTIONS_SIZE[1];
+    // Variable string option selectionnee
     char formatted_option[options_columns + 2];
     
     // Print des options
@@ -144,13 +143,12 @@ int print_options(int option, int row, int column, int flush) {
             print_line(formatted_option, row + i, column - 2, NOFLUSH);
         }
     }
-    if (flush) return fflush(stdout);
-
-    return 0;
+    if (flush) fflush(stdout);
 }
 
-// Print les controles. Anchor de position top left.
-int print_controls(int row, int column, int flush) {
+// Print les controles.
+// Anchor de position top left.
+void print_controls(int row, int column, int flush) {
     // Variables de taille
     int controls_rows = CONTROLS_SIZE[0];
     int controls_columns = CONTROLS_SIZE[1];
@@ -159,29 +157,30 @@ int print_controls(int row, int column, int flush) {
     for (int i = 0; i < controls_rows; i++) {
         print_line(CONTROLS[i], row+i, column, NOFLUSH);
     }
-    if (flush) return fflush(stdout);
-
-    return 0;
+    if (flush) fflush(stdout);
 }
 
 // Print main menu - Titre et options initiales
-// Print le titre et les options initiales sans padding, avec les options sous le titre au centre. Anchor top left.
-int print_main_menu(int title_row, int title_column, int options_row, int options_column) {
+// Print le titre et les options initiales sans padding, avec les options sous le titre au centre
+// Anchor de position top left
+void print_main_menu(int title_row, int title_column, int options_row, int options_column) {
     // Gradiente aleatoire
     struct gradient grad = get_gradient();
 
     // Print titre et options, flush
     print_title(title_row, title_column, grad, NOFLUSH);
     print_options(0, options_row, options_column, NOFLUSH);
-    return fflush(stdout);
+    
+    fflush(stdout);
 }
 
-// Pint case a la position
-// Anchor top left
+// Print case a la position [row, column]
+// Anchor de position top left
 void print_case(int row, int column, int case_value) {
-    // Init variables
+    // Variables de taille
     int case_rows = CASE_SIZE[0];
     int case_columns = CASE_SIZE[1];
+    // Variables de formatting
     int row_to_format = case_rows / 2;
     char preformatted_row[case_columns+1], formatted_row[case_columns];
     
@@ -189,7 +188,7 @@ void print_case(int row, int column, int case_value) {
     for (int i = 0; i < case_rows; i++) {
         // Check si row = a formatter
         if (i == row_to_format) {
-            // Check si value = 0, on replace par 2 space 
+            // Check si value = 0, on replace valeur de case par 2 space 
             if (!case_value) {
                 snprintf(formatted_row, case_columns, CASE[i], "  ");
             }
@@ -207,8 +206,8 @@ void print_case(int row, int column, int case_value) {
 
 // Print l'ensemble de lignes de cases pour former le tableau complet
 // Anchor de position top left.
-int print_gameboard(int row, int column, int case_values[4][4]) {
-    // Variables Init
+void print_gameboard(int row, int column, int case_values[4][4]) {
+    // Variables de taille
     int case_rows = CASE_SIZE[0];
     int case_columns = CASE_SIZE[1];
 
@@ -219,5 +218,5 @@ int print_gameboard(int row, int column, int case_values[4][4]) {
             print_case(row + case_rows*i, column + case_columns*j, case_values[i][j]);
         }
     }
-    return fflush(stdout);
+    fflush(stdout);
 }
