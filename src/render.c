@@ -192,7 +192,7 @@ void print_case(int row, int column, int case_value) {
             if (!case_value) {
                 snprintf(formatted_row, case_columns, CASE[i], "  ");
             }
-            // Sinon, on replace le format %s par format de int %2i puis avec le valeur de la case
+            // Sinon, on replace le format %s par format de int %2i et puis avec le valeur de la case
             else {
                 snprintf(preformatted_row, case_columns+1, CASE[i], "%2i");
                 snprintf(formatted_row, case_columns, preformatted_row, case_value);

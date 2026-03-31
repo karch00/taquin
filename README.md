@@ -29,6 +29,20 @@ servir d'un carreau vide qui pourra être remplacé par un des 4 nombres adjacen
  
 > **[ENTER]** - Sélectionner option<br>
 > **[q]** - Quitter le jeu / Aller vers le menu
+
+### Compilation
+
+Pour compiler le jeu, il suffit d'executer la commande suivante:
+```bash
+gcc ./src/* -o build/taquin
+```
+Puis executer le jeu:
+```bash
+./build/taquin
+```
+
+> [!WARNING]
+> Le jeu est prevu pour étre compilé et executé sur Linux
  
 ---
  
