@@ -34,11 +34,11 @@ servir d'un carreau vide qui pourra être remplacé par un des 4 nombres adjacen
 
 Pour compiler le jeu, il suffit d'executer la commande suivante:
 ```bash
-gcc ./src/* -o build/taquin
+gcc ./src/* -o ./taquin
 ```
 Puis executer le jeu:
 ```bash
-./build/taquin
+./taquin
 ```
 
 > [!WARNING]
