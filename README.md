@@ -36,9 +36,10 @@ Pour compiler le jeu, il suffit d'executer la commande suivante:
 ```bash
 gcc ./src/* -o ./taquin
 ```
-Puis executer le jeu:
+Puis executer le jeu. Ajouter -w pour avoir un tableau ordonné pour tester la victoire directement:
 ```bash
 ./taquin
+./taquin -w
 ```
 
 > [!WARNING]
